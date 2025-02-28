@@ -37,4 +37,8 @@ const router = createRouter({
 // Create and mount the app
 const app = createApp(App)
 app.use(router)
+
+// Disable Vue Devtools
+app.config.devtools = false
+
 app.mount('#app')

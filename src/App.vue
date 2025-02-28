@@ -9,19 +9,19 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
-import Header from './components/Header.vue'
-import Footer from './components/Footer.vue'
-import ErrorBoundary from './components/ErrorBoundary.vue'
+import { defineComponent } from 'vue';
+import Header from './components/Header.vue';
+import Footer from './components/Footer.vue';
+import ErrorBoundary from './components/ErrorBoundary.vue';
 
 export default defineComponent({
   name: 'App',
   components: {
     Header,
     Footer,
-    ErrorBoundary,
-  },
-})
+    ErrorBoundary
+  }
+});
 </script>
 
 <style>
@@ -32,9 +32,8 @@ export default defineComponent({
 }
 
 body {
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
-    'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   line-height: 1.6;
   color: #2d3748;
 }
@@ -45,3 +44,4 @@ body {
   flex-direction: column;
 }
 </style>
+
