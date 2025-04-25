@@ -1,24 +1,24 @@
 <template>
   <div class="app">
     <ErrorBoundary>
-      <Header />
+      <TodoHeader />
       <router-view />
-      <Footer />
+      <TodoFooter />
     </ErrorBoundary>
   </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
-import Header from './components/Header.vue';
-import Footer from './components/Footer.vue';
+import TodoHeader from './components/Header.vue';
+import TodoFooter from './components/Footer.vue';
 import ErrorBoundary from './components/ErrorBoundary.vue';
 
 export default defineComponent({
   name: 'App',
   components: {
-    Header,
-    Footer,
+    TodoHeader,
+    TodoFooter,
     ErrorBoundary
   }
 });

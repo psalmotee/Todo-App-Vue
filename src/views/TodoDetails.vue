@@ -12,7 +12,6 @@
       </div>
     </div>
     <div v-else class="container">
-      <Navigation />
       <div class="todo-details">
         <h2 class="main-heading">Todo Details</h2>
         <div class="todo-card">
@@ -27,7 +26,7 @@
           </div>
         </div>
         <router-link to="/">
-          <button class="back-button">Back to HomePage</button>
+          <button class="back-button">Back</button>
         </router-link>
       </div>
       <BackToTop />
@@ -40,25 +39,26 @@ import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
 import BackToTop from '../components/BackToTop.vue'
-import Navigation from '../components/Navigation.vue'
 
 export default {
   name: 'TodoDetails',
   components: {
     BackToTop,
-    Navigation,
   },
   setup() {
     const route = useRoute()
     const todo = ref(null)
     const loading = ref(true)
-    const toast = ref(null) // In a real app, you'd use a toast library
+    const toast = ref(null)
 
     const showToast = (title, description, status) => {
-      console.log(`${status}: ${title} - ${description}`)
-      // In a real app, you'd implement a toast notification
+      toast.value = { title, description, status }
+      setTimeout(() => {
+      toast.value = null
+      }, 3000)
     }
 
+    // Fetch todo details
     onMounted(async () => {
       try {
         const id = route.params.id
@@ -176,18 +176,18 @@ export default {
 
 .completed {
   background-color: #48bb78;
-  color: white;
+  color: #fff;
 }
 
 .pending {
   background-color: #f56565;
-  color: white;
+  color: #fff;
 }
 
 .button,
 .back-button {
   background-color: #4299e1;
-  color: white;
+  color: #fff;
   padding: 0.75rem 1.5rem;
   border: none;
   border-radius: 0.375rem;
@@ -195,6 +195,8 @@ export default {
   cursor: pointer;
   transition: background-color 0.3s;
   align-self: flex-start;
+  transition: all 0.3s ease;
+
 }
 
 .back-button {
@@ -205,5 +207,6 @@ export default {
 .button:hover,
 .back-button:hover {
   background-color: #3182ce;
+  scale: 1.05;
 }
 </style>

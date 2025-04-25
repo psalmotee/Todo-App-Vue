@@ -4,7 +4,6 @@
       <div class="spinner"></div>
     </div>
     <div v-else class="content-container">
-      <Navigation />
       <div class="todo-list-container">
         <h2 class="main-heading">Todo List</h2>
 
@@ -20,8 +19,7 @@
 
         <div v-if="filteredTodos.length === 0" class="no-todos-alert">
           <p>
-            No todos found matching your criteria. Try a different search name or filter, or create
-            a new todo.
+            No todos found matching your criteria. Try a different search name or filter, or create a new todo.
           </p>
         </div>
 
@@ -66,7 +64,6 @@ import { ref, computed, onMounted } from 'vue'
 import axios from 'axios'
 import TodoModal from '../components/TodoModal.vue'
 import BackToTop from '../components/BackToTop.vue'
-import Navigation from '../components/Navigation.vue'
 
 const ITEMS_PER_PAGE = 10
 
@@ -75,7 +72,6 @@ export default {
   components: {
     TodoModal,
     BackToTop,
-    Navigation,
   },
   setup() {
     const todos = ref([])
@@ -87,9 +83,51 @@ export default {
     const isModalOpen = ref(false)
 
     const showToast = (title, description, status) => {
-      console.log(`${status}: ${title} - ${description}`)
-      // In a real app, you'd implement a toast notification
+      const toastContainer = document.createElement('div')
+      toastContainer.className = `toast toast-${status}`
+      toastContainer.innerHTML = `
+      <strong>${title}</strong>
+      <p>${description}</p>
+      `
+      document.body.appendChild(toastContainer)
+
+      setTimeout(() => {
+      toastContainer.classList.add('fade-out')
+      toastContainer.addEventListener('transitionend', () => {
+        toastContainer.remove()
+      })
+      }, 3000)
     }
+
+    const style = document.createElement('style')
+    style.textContent = `
+      .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #2d3748;
+      color: #fff;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      opacity: 1;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .toast-success {
+      background-color: #38a169;
+      }
+      .toast-error {
+      background-color: #e53e3e;
+      }
+      .toast-info {
+      background-color: #3182ce;
+      }
+      .toast.fade-out {
+      opacity: 0;
+      transform: translateY(20px);
+      }
+    `
+    document.head.appendChild(style)
 
     const updateLocalStorage = (updatedTodos) => {
       localStorage.setItem('todos', JSON.stringify(updatedTodos))
@@ -273,48 +311,60 @@ export default {
   height: auto;
 }
 
-@media (min-width: 768px) {
-  .controls {
-    flex-direction: row;
-    height: auto;
-  }
-}
-
 .search-input {
   flex: 1;
-  padding: 0.5rem;
-  border: 1px solid #e2e8f0;
+  padding: 1rem;
+  border: 1px solid #b2f5ea;
   border-radius: 0.25rem;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.search-input:hover, .filter-select:hover {
+  border-color: #81e6d9;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
+}
+
+.search-input:focus, .filter-select:focus {
+  outline: none;
+  border-color: #81e6d9;
 }
 
 .filter-select {
   width: 100%;
   padding: 0.5rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #b2f5ea;
   border-radius: 0.25rem;
 }
 
-@media (min-width: 768px) {
-  .filter-select {
-    width: 200px;
-  }
+.filter-select option {
+  background-color: #ffffff;
+  color: #319795;
+  font-size: 1rem;
+}
+
+.filter-select option:hover {
+  background-color: #81e6d9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .create-button {
   width: 100%;
   padding: 0.5rem 1rem;
   background-color: #319795;
-  color: white;
+  color: #fff;
   border: none;
   border-radius: 0.25rem;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.2s;
 }
 
-@media (min-width: 768px) {
-  .create-button {
-    width: auto;
-  }
+.create-button:hover {
+  background-color: #81e6d9;
+  color: #2c7a7b;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .no-todos-alert {
@@ -346,13 +396,6 @@ export default {
   border-color: #81e6d9;
 }
 
-@media (min-width: 640px) {
-  .todo-item {
-    flex-direction: row;
-    align-items: center;
-  }
-}
-
 .todo-link {
   text-decoration: none;
   color: inherit;
@@ -375,22 +418,10 @@ export default {
   text-decoration: line-through;
 }
 
-@media (min-width: 640px) {
-  .todo-title {
-    margin-bottom: 0;
-  }
-}
-
 .todo-actions {
   display: flex;
   gap: 0.5rem;
   margin-top: 0.5rem;
-}
-
-@media (min-width: 640px) {
-  .todo-actions {
-    margin-top: 0;
-  }
 }
 
 .edit-button,
@@ -405,12 +436,24 @@ export default {
 
 .edit-button {
   background-color: #4299e1;
-  color: white;
+  color: #fff;
 }
 
 .delete-button {
   background-color: #f56565;
-  color: white;
+  color: #fff;
+}
+.edit-button:hover {
+  background-color: #63b3ed;
+}
+.delete-button:hover {
+  background-color: #fc8181;
+}
+.todo-actions button {
+  transition: all 0.2s;
+}
+.todo-actions button:hover {
+  transform: scale(1.05);
 }
 
 .pagination {
@@ -430,14 +473,48 @@ export default {
   cursor: pointer;
 }
 
+.pagination-button:hover {
+  background-color: #81e6d9;
+  color: #2c7a7b;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 .pagination-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
 @media (min-width: 768px) {
+  .controls {
+    flex-direction: row;
+    height: auto;
+  }
+
+  .filter-select {
+    width: 200px;
+  }
+
+  .create-button {
+    width: auto;
+  }
+
   .pagination-button {
     padding: 0.5rem 1.5rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .todo-item {
+    flex-direction: row;
+    align-items: center;
+  }
+
+   .todo-title {
+    margin-bottom: 0;
+  }
+
+  .todo-actions {
+    margin-top: 0;
   }
 }
 </style>

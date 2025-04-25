@@ -39,6 +39,8 @@ const app = createApp(App)
 app.use(router)
 
 // Disable Vue Devtools
-app.config.devtools = false
+if (import.meta.env.MODE !== 'development') {
+  app.config.devtools = false
+}
 
 app.mount('#app')

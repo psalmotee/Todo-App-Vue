@@ -1,42 +1,28 @@
 <template>
   <nav class="navigation">
     <div class="nav-content">
-      <h1 class="nav-title">Todo App</h1>
-
       <div class="nav-links-desktop">
         <router-link to="/" class="nav-link">Home</router-link>
         <router-link to="/not-found" class="nav-link">Not Found</router-link>
-        <router-link to="/error" class="nav-link">Error</router-link>
+        <router-link to="/ErrorBoundary" class="nav-link" @click="closeDrawer">Error</router-link>
       </div>
 
       <button class="menu-button" @click="toggleDrawer">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
+        <font-awesome-icon :icon="['fas', 'bars']" />
       </button>
     </div>
 
     <div class="drawer" :class="{ 'drawer-open': isDrawerOpen }">
       <div class="drawer-content">
-        <button class="drawer-close" @click="toggleDrawer">&times;</button>
+        <button class="drawer-close" @click="toggleDrawer">
+          <font-awesome-icon :icon="['fas', 'times']" />
+        </button>
         <div class="drawer-links">
           <router-link to="/" class="drawer-link" @click="closeDrawer">Home</router-link>
           <router-link to="/not-found" class="drawer-link" @click="closeDrawer"
             >Not Found</router-link
           >
-          <router-link to="/error" class="drawer-link" @click="closeDrawer">Error</router-link>
+          <router-link to="/ErrorBoundary" class="drawer-link" @click="closeDrawer">Error</router-link>
         </div>
       </div>
     </div>
@@ -45,9 +31,17 @@
 
 <script>
 import { ref } from 'vue'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faBars, faTimes)
 
 export default {
-  name: 'Navigation',
+  name: 'NavigationBar',
+  components: {
+    FontAwesomeIcon,
+  },
   setup() {
     const isDrawerOpen = ref(false)
 
@@ -69,17 +63,7 @@ export default {
 </script>
 
 <style scoped>
-.navigation {
-  background-color: #319795;
-  color: white;
-  padding: 1rem 0;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-
 .nav-content {
-  max-width: 1024px;
   margin: 0 auto;
   padding: 0 1rem;
   display: flex;
@@ -92,30 +76,18 @@ export default {
   font-weight: 700;
 }
 
-@media (min-width: 768px) {
-  .nav-title {
-    font-size: 1.5rem;
-  }
-}
-
 .nav-links-desktop {
   display: none;
 }
 
-@media (min-width: 768px) {
-  .nav-links-desktop {
-    display: flex;
-    gap: 1rem;
-  }
-}
-
 .nav-link {
-  color: white;
+  color: #fff;
   text-decoration: none;
   font-weight: 700;
   font-size: 1.125rem;
-  padding: 0.75rem;
+  padding: 0.4rem;
   border-radius: 0.375rem;
+  transition: all 0.3s ease;
 }
 
 .nav-link:hover {
@@ -126,21 +98,17 @@ export default {
 .menu-button {
   display: block;
   background: none;
-  border: 1px solid white;
-  color: white;
+  border: 1px solid #fff;
+  color: #fff;
   padding: 0.25rem;
   border-radius: 0.25rem;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .menu-button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-@media (min-width: 768px) {
-  .menu-button {
-    display: none;
-  }
+  color: #2d3748;
+  background-color: #e6fffa;
 }
 
 .drawer {
@@ -149,15 +117,9 @@ export default {
   right: -100%;
   width: 100%;
   height: 100vh;
-  background-color: white;
+  background-color: #fff;
   transition: right 0.3s ease;
   z-index: 20;
-}
-
-@media (min-width: 768px) {
-  .drawer {
-    display: none;
-  }
 }
 
 .drawer-open {
@@ -193,10 +155,30 @@ export default {
   font-size: 1.25rem;
   padding: 0.75rem;
   border-radius: 0.375rem;
+  transition: all 0.3s ease;
 }
 
 .drawer-link:hover {
   background-color: #e6fffa;
   color: #319795;
+}
+
+@media (min-width: 768px) {
+  .nav-title {
+    font-size: 1.5rem;
+  }
+
+  .nav-links-desktop {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .menu-button {
+    display: none;
+  }
+
+  .drawer {
+    display: none;
+  }
 }
 </style>
