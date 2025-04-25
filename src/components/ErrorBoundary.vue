@@ -6,7 +6,7 @@
       We are sorry for the inconvenience. Our team has been notified and is working on the issue.
     </p>
     <p class="error-details">Error: {{ errorMessage }}</p>
-    <button class="error-button" @click="goHome">Go Back to Homepage</button>
+    <button class="error-button" @click="goHome">Back </button>
   </div>
 </template>
 
@@ -72,7 +72,7 @@ export default {
 
 .error-button {
   background: linear-gradient(to right, #38b2ac, #319795, #2c7a7b);
-  color: white;
+  color: #fff;
   padding: 0.75rem 1.5rem;
   border: none;
   border-radius: 0.375rem;

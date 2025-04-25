@@ -4,7 +4,7 @@
       <h1 class="heading">404 - Page Not Found</h1>
       <p class="text">Sorry, the page you are looking for does not exist.</p>
       <router-link to="/">
-        <button class="button">Go Back to Homepage</button>
+        <button class="button">Back</button>
       </router-link>
     </div>
   </div>
@@ -43,16 +43,17 @@ export default {
 
 .button {
   background-color: #319795;
-  color: white;
+  color: #fff;
   font-size: 1.125rem;
   padding: 0.75rem 1.5rem;
   border: none;
   border-radius: 0.375rem;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: all ease 0.3s;
 }
 
 .button:hover {
   background-color: #2c7a7b;
+  scale: 1.05;
 }
 </style>

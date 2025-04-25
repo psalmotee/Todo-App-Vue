@@ -120,7 +120,7 @@ export default {
   z-index: 20;
   width: 90%;
   max-width: 500px;
-  background-color: white;
+  background-color: #fff;
   border-radius: 0.375rem;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
@@ -198,13 +198,18 @@ export default {
   font-weight: 500;
   cursor: pointer;
   border: 1px solid #e2e8f0;
-  background-color: white;
+  background-color: #fff;
 }
 
 .primary-button {
   background-color: #4299e1;
-  color: white;
+  color: #fff;
   border-color: #4299e1;
+}
+
+.primary-button:hover {
+  background-color: #3182ce;
+  border-color: #3182ce;
 }
 
 .mr-3 {

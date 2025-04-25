@@ -4,21 +4,33 @@
       <router-link to="/" class="header-link">
         <h1 class="header-title">Todo App</h1>
       </router-link>
+      <Navigation />
     </div>
   </header>
 </template>
 
 <script>
+import Navigation from '../components/Navigation.vue';
+
 export default {
-  name: 'Header',
+  name: 'TodoHeader',
+  components: {
+    Navigation,
+  },
+  setup() {
+    return {};
+  },
 }
 </script>
 
 <style scoped>
 .header {
   background-color: #319795;
-  color: white;
+  color: #fff;
   padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .header-content {
@@ -32,7 +44,7 @@ export default {
 
 .header-link {
   text-decoration: none;
-  color: white;
+  color: #fff;
 }
 
 .header-title {
